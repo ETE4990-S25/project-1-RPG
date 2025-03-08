@@ -23,11 +23,28 @@
         "HP": 46,
         "Attack": ["Gust", "Windblade"]
     }
-    
     {
-        "Name": ,
-        "AC": ,
-        "HP": ,
-        "Attack": []
+        "Name": "Displacer Beast",
+        "AC": 16,
+        "HP": 34,
+        "Attack": ["Tentacle", "Mirage"]
+    }
+    {
+        "Name": "Zombie Hulk",
+        "AC": 10,
+        "HP": 65,
+        "Attack": ["Slam", "Grab"]
+    }
+    {
+        "Name": "Giant Spider",
+        "AC": 13,
+        "HP": 35,
+        "Attack":["Venom Bite", "Web"]
+    }
+    {
+        "Name": "Frost Salamander",
+        "AC": 15,
+        "HP": 55,
+        "Attack": ["Frost Beam", "Claw"]
     }
 ]
