@@ -1,0 +1,33 @@
+[
+    {
+        "Name": "Fire Elemental",
+        "AC": 14,
+        "HP": 46,
+        "Attack": ["Fireball", "Fire Dash"]
+    }
+    {
+        "Name": "Water Elemental",
+        "AC": 14,
+        "HP": 46,
+        "Attack": ["Water Gun", "Aqua Jet"]
+    }
+    {
+        "Name": "Earth Elemental",
+        "AC": 14,
+        "HP": 46,
+        "Attack": ["Earth Tremor", "Rock Slide"]
+    }
+    {
+        "Name": "Air Elemental",
+        "AC": 14,
+        "HP": 46,
+        "Attack": ["Gust", "Windblade"]
+    }
+    
+    {
+        "Name": ,
+        "AC": ,
+        "HP": ,
+        "Attack": []
+    }
+]
