@@ -67,12 +67,16 @@ class Player:
 
 
     def get_inventory(self):
-    # Get the player's current inventory and print it with indexes and key-value pairs."""
-        for index, item in enumerate(self.inventory):
-            print(f"Item {index + 1}:")
-            for key, value in item.items():
-                print(f"  {key}: {value}")
-            print()  # Adds a blank line between items
+        key_to_omit = ['id']  # List of keys to omit from printing
+        if not self.inventory:
+            return "Inventory is empty."
+
+        inventory_str = "Inventory:\n"
+        for item in self.inventory:
+            item_info = ', '.join(f"{key}: {value}" for key, value in item.items() if key not in key_to_omit)
+            inventory_str += f"- {item_info}\n"
+
+        return inventory_str.strip()
     
     def display_stats(self):
         print(f"Name: {self.name}")
