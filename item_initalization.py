@@ -64,7 +64,7 @@ for item in itemdata['items']:
         continue 
     
     if item.get('category') in valid_armor:
-        item['AC'] = random.randint(1,3)
+        item['AC'] = random.randint(10,16)
 
 
 # %% [markdown]
@@ -148,43 +148,76 @@ def generate_inventory():
 
 
 # %%
-def store():
-    shop = generate_inventory()
-    for item in shop:
-        print(item['name']) 
+def store_interaction():
+    shop, shop_gold = generate_inventory()  
+    
+    print('Welcome to my shop, adventurer!')
+    print('Please have a look at my wares:\n')
+    print(f'If you wish to sell, I have {shop_gold} gold on hand.\n')
+    
+    # Display player's gold
+    print(f'You have {player._gold} Gold to spend.\n')
+
+    # Display the shop items with numbers
+    for index, item in enumerate(shop, start=1):
+        print(f"{index}. {item['name']}")
         print(item['description'])
-        print(item['Value'], 'Gold')
+        print(f"{item['Value']} Gold")
         print('-----------------------------------')
+    
+    # Player's gold (getting the player's gold)
+    player_gold = player.gold
 
-
-
-# %%
-#def store():
-#    shop = generate_inventory()
-#    for item in shop['items']:
-#        name = item.get('name', '')
-#        if 'Pile' in name:
-#            shop.pop()
+    # Purchase loop
+    while True:    
+        # Get the item choice from the player
+        choice = input("Enter the number of the item you wish to buy (or type 'exit' to leave): ")
+        
+        if choice.lower() == 'exit':
+            print("You leave the shop.")
+            break
+        
+        # Validate input for item choice
+        if not choice.isdigit() or int(choice) < 1 or int(choice) > len(shop):
+            print("Invalid choice. Please choose a valid item number.")
+            continue
+        
+        #input to index
+        item_index = int(choice) - 1
+        item_to_buy = shop[item_index]
+        
+        # Ask how many they want to buy
+        quantity = input(f"How many {item_to_buy['name']}s do you want to buy? ")
+        
+        # Validate quantity input
+        if not quantity.isdigit() or int(quantity) < 1:
+            print("Please enter a valid quantity.")
+            continue
+        
+        quantity = int(quantity)
+        total_cost = item_to_buy['Value'] * quantity
+        
+        # Check if player has enough gold
+        if player_gold >= total_cost:
+            print(f"You bought {quantity} {item_to_buy['name']}(s) for {total_cost} Gold.")
             
-#    for item in shop:
-#        print(item['name']) 
-#        print(item['description'])
-#        print(item['Value'], 'Gold')
-#        print('-----------------------------------')
+            # Add the correct quantity of the item to the player's inventory (gear)
+            for _ in range(quantity):
+                gear.append(item_to_buy.copy())  # Add a copy of the item to prevent shared references
+            
+            # Deduct gold from the player
+            player.gold = player_gold - total_cost
 
-
-#store()
-
-# %% [markdown]
-# # Function to open backpack
-
-# %%
-def Backpack():
-    for item in gear:
-        for key, value in item.items():
-            if key != 'id':  # Exclude 'ID' key
-                print(f"{key}: {value}")
-        print('-----------------------------------')
+            # Remove the bought item from the shop
+            del shop[item_index]
+            
+        else:
+            print("You don't have enough gold to buy that many.")
+        
+        # If the shop is empty, end the interaction
+        if not shop:
+            print("The shop is now empty. You leave.")
+            break
 
 
 
