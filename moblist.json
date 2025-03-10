@@ -4,43 +4,43 @@
         "AC": 14,
         "HP": 46,
         "Attack": ["Fireball", "Fire Dash"]
-    }
+    },
     {
         "Name": "Water Elemental",
         "AC": 14,
         "HP": 46,
         "Attack": ["Water Gun", "Aqua Jet"]
-    }
+    },
     {
         "Name": "Earth Elemental",
         "AC": 14,
         "HP": 46,
         "Attack": ["Earth Tremor", "Rock Slide"]
-    }
+    },
     {
         "Name": "Air Elemental",
         "AC": 14,
         "HP": 46,
         "Attack": ["Gust", "Windblade"]
-    }
+    },
     {
         "Name": "Displacer Beast",
         "AC": 16,
         "HP": 34,
         "Attack": ["Tentacle", "Mirage"]
-    }
+    },
     {
         "Name": "Zombie Hulk",
         "AC": 10,
         "HP": 65,
         "Attack": ["Slam", "Grab"]
-    }
+    },
     {
         "Name": "Giant Spider",
         "AC": 13,
         "HP": 35,
         "Attack":["Venom Bite", "Web"]
-    }
+    },
     {
         "Name": "Frost Salamander",
         "AC": 15,
