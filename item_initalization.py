@@ -5,6 +5,7 @@
 # %%
 import json
 import random
+import stat_generator
 
 # %%
 with open('ItemData.json', "r") as file:

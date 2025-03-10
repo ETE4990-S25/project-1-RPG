@@ -42,23 +42,37 @@ class Player:
 
         # Initialize inventory and gold
         self.inventory = []  # To hold loot items
-        self._gold = 0  # Private gold attribute
+        self.gold = 50  # Private gold attribute
     
-    def add_gold(self, amount):
-        """Add gold to the player."""
-        self._gold += amount
-
-    def get_gold(self):
-        """Get the current amount of gold the player has."""
+    @property
+    def gold(self):
         return self._gold
 
-    def add_to_inventory(self, item):
-        """Add an item to the player's inventory."""
-        self.inventory.append(item)
+    @gold.setter
+    def gold(self, amount):
+        if amount < 0:
+            print("Gold cannot be negative.")
+        else:
+            self._gold = amount
+
+    def add_to_inventory(self, item_name, quantity=1):
+    # Check if item already exists in inventory
+        for item in self.inventory:
+            if item["name"] == item_name:
+                item["quantity"] += quantity
+                break
+        else:
+            # If item does not exist, add a new one
+            self.inventory.append({"name": item_name, "quantity": quantity})
+
 
     def get_inventory(self):
-        """Get the player's current inventory."""
-        return self.inventory
+    # Get the player's current inventory and print it with indexes and key-value pairs."""
+        for index, item in enumerate(self.inventory):
+            print(f"Item {index + 1}:")
+            for key, value in item.items():
+                print(f"  {key}: {value}")
+            print()  # Adds a blank line between items
     
     def display_stats(self):
         print(f"Name: {self.name}")
@@ -73,7 +87,10 @@ class Player:
 
     def level_up(self):
         self.__level += 1
+        hp_gain = hproll() + math.floor((self.constitution-10)/2)
+        self.hitpoints += max(hp_gain,1)
         print(f"{self.name} has leveled up to Level {self.__level}!")
+        print(f"{self.name} gained {hp_gain} hitpoints")
 
     def get_level(self):
         print("You're level: ")
