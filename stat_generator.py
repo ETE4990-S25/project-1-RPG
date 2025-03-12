@@ -7,7 +7,7 @@ def d6roll():
 def d10roll():
     return random.randint(1,10)
 
-def statroll():
+def statroll():   # Roll 4 d6 and add the highest 3
     statlist = []
     for i in range(4):
         statlist.append(d6roll())
