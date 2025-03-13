@@ -138,10 +138,17 @@ for item in itemdata['items']:   #Navigate items in each dictionary
 def generate_inventory():
     loot = []
     gold = random.randint(20,50)
+    
+    # Generate 15 random items
     for i in range(15):
-        item_id = random.randint(1,131)
-        loot.append(itemdata['items'][item_id]) 
+        item_id = random.randint(1, 130)  # Ensure the index is within bounds
+        item = itemdata['items'][item_id]
+        
+        # Add the item to the loot list (we'll add to the player's inventory later)
+        loot.append(item)
+    
     return loot, gold
+
 
 
 
@@ -156,7 +163,7 @@ def store_interaction():
     print(f'If you wish to sell, I have {shop_gold} gold on hand.\n')
     
     # Display player's gold
-    print(f'You have {player._gold} Gold to spend.\n')
+    print(f'You have {player.gold} Gold to spend.\n')
 
     # Display the shop items with numbers
     for index, item in enumerate(shop, start=1):
@@ -165,8 +172,9 @@ def store_interaction():
         print(f"{item['Value']} Gold")
         print('-----------------------------------')
     
-    # Player's gold (getting the player's gold)
-    player_gold = player.gold
+    # Display player inventory
+    print("\nYour current inventory:")
+    player.display_inventory()
 
     # Purchase loop
     while True:    
@@ -182,7 +190,7 @@ def store_interaction():
             print("Invalid choice. Please choose a valid item number.")
             continue
         
-        #input to index
+        # Input to index
         item_index = int(choice) - 1
         item_to_buy = shop[item_index]
         
@@ -198,15 +206,15 @@ def store_interaction():
         total_cost = item_to_buy['Value'] * quantity
         
         # Check if player has enough gold
-        if player_gold >= total_cost:
+        if player.gold >= total_cost:
             print(f"You bought {quantity} {item_to_buy['name']}(s) for {total_cost} Gold.")
             
             # Add the correct quantity of the item to the player's inventory (gear)
             for _ in range(quantity):
-                gear.append(item_to_buy.copy())  # Add a copy of the item to prevent shared references
+                player.inventory.add_item(item_to_buy['name'], quantity)
             
             # Deduct gold from the player
-            player.gold = player_gold - total_cost
+            player.gold -= total_cost
 
             # Remove the bought item from the shop
             del shop[item_index]
@@ -218,8 +226,6 @@ def store_interaction():
         if not shop:
             print("The shop is now empty. You leave.")
             break
-
-
 
 
 
