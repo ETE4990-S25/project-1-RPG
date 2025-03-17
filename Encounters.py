@@ -24,7 +24,32 @@ def combat(player):
     monster_hp = monster['HP']
     monster_ac = monster['AC']
     monster_strmod = math.floor((monster['Str']-10)/2)
-    monster_strmod = math.floor((monster['Str']-10)/2)
+    monster_dexmod = math.floor((monster['Dex']-10)/2)
+    monster_conmod = math.floor((monster['Con']-10)/2)
+    monster_intmod = math.floor((monster['Int']-10)/2)
+    monster_wismod = math.floor((monster['Wis']-10)/2)
+    monster_chamod = math.floor((monster['Cha']-10)/2)
+    monster_dmgtype = monster['Damage type']
+
+    moveslist = [Fireball, Firedash, Watergun, Aquajet, Earthtremor, 
+                 Rockslide, Gust, Windblade, Tentacle, Bite, Slam, Grab,
+                 Venom, Web, Frostbeam, Claw]
+    Fireball = random.randint(1, 12) + monster_intmod
+    Firedash = random.randint(1, 10) + monster_dexmod
+    Watergun = random.randint(1, 12) + monster_wismod
+    Aquajet = random.randint(1, 10) + monster_dexmod
+    Earthtremor = random.randint(1, 12) + monster_conmod
+    Rockslide = random.randint(1, 10) + monster_dexmod
+    Gust = random.randint(1, 12) + monster_chamod
+    Windblade = random.randint(1, 10) + monster_dexmod
+    Tentacle = random.randint(1, 12) + monster_dexmod
+    Bite = random.randint(1, 8) + monster_strmod
+    Slam = random.randint(1, 12) + monster_conmod
+    Grab = random.randint(1, 10) + monster_strmod
+    Venom = random.randint(1, 12) + monster_intmod
+    Web = random.randint(1, 10) + monster_dexmod
+    Frostbeam = random.randint(1, 12) + monster_chamod
+    Claw = random.randint(1, 10) + monster_strmod
     
     # Determine turn order based on Dexterity
     player_turn = player.dexterity >= 10  # Adjust threshold as needed
@@ -45,6 +70,8 @@ def combat(player):
                 if attack_roll > monster_ac:
                     # Apply power buff to damage if it's active
                     damage = random.randint(1, 6) + player.strmod + power_buff
+                    if attack_roll - player.strmod == 20: #natural 20 crit mechanic
+                        damage *= 2
                     print(f"You hit {monster['Name']} for {damage} damage!")
                     monster_hp -= damage
                 else:
@@ -98,12 +125,16 @@ def combat(player):
 
         else:
             attack = random.choice(monster["Attack"])
+            for move in moveslist:
+                if attack == move:
+                    damage = move
             print(f"{monster['Name']} uses {attack}!")
             mobattack_roll = random.randint(1, 20) + monster_strmod
             print(f"{monster['Name']} rolled a {mobattack_roll} to hit!")
             if mobattack_roll > player.base_AC:
-                damage = random.randint(1, 6)  # Monster attack example
-                print(f"{monster['Name']} deals {damage} damage!")
+                if mobattack_roll - monster_strmod == 20: #natural 20 crit mechanic
+                        damage *= 2
+                print(f"{monster['Name']} deals {damage} {monster_dmgtype} damage!")
                 player.hitpoints -= damage
             else:
                 print(f"The monster missed!")

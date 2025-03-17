@@ -6,10 +6,11 @@
         "Str": 16,
         "Dex": 14,
         "Con": 13,
-        "Int": 8,
+        "Int": 16,
         "Wis": 12,
-        "Cha": 13,
-        "Attack": ["Fireball", "Fire Dash"]
+        "Cha": 8,
+        "Attack": ["Fireball", "Firedash"],
+        "Damage type": "Fire"
     },
     {
         "Name": "Water Elemental",
@@ -21,7 +22,8 @@
         "Int": 8,
         "Wis": 12,
         "Cha": 11,
-        "Attack": ["Water Gun", "Aqua Jet"]
+        "Attack": ["Watergun", "Aquajet"],
+        "Damage type": "Bludgeoning"
     },
     {
         "Name": "Earth Elemental",
@@ -33,7 +35,8 @@
         "Int": 7,
         "Wis": 12,
         "Cha": 10,
-        "Attack": ["Earth Tremor", "Rock Slide"]
+        "Attack": ["Earthtremor", "Rockslide"],
+        "Damage type": "Bludgeoning"
     },
     {
         "Name": "Air Elemental",
@@ -44,8 +47,9 @@
         "Con": 11,
         "Int": 8,
         "Wis": 12,
-        "Cha": 13,
-        "Attack": ["Gust", "Windblade"]
+        "Cha": 14,
+        "Attack": ["Gust", "Windblade"],
+        "Damage type": "Bludgeoning"
     },
     {
         "Name": "Displacer Beast",
@@ -57,7 +61,8 @@
         "Int": 6,
         "Wis": 15,
         "Cha": 8,
-        "Attack": ["Tentacle", "Mirage"]
+        "Attack": ["Tentacle", "Bite"],
+        "Damage type": "Piercing"
     },
     {
         "Name": "Zombie Hulk",
@@ -69,7 +74,8 @@
         "Int": 6,
         "Wis": 8,
         "Cha": 8,
-        "Attack": ["Slam", "Grab"]
+        "Attack": ["Slam", "Grab"],
+        "Damage type": "Necrotic"
     },
     {
         "Name": "Giant Spider",
@@ -78,10 +84,11 @@
         "Str": 12,
         "Dex": 14,
         "Con": 13,
-        "Int": 12,
+        "Int": 16,
         "Wis": 12,
         "Cha": 8,
-        "Attack":["Venom Bite", "Web"]
+        "Attack":["Venom", "Web"],
+        "Damage type": "Poison"
     },
     {
         "Name": "Frost Salamander",
@@ -92,7 +99,8 @@
         "Con": 13,
         "Int": 8,
         "Wis": 12,
-        "Cha": 13,
-        "Attack": ["Frost Beam", "Claw"]
+        "Cha": 15,
+        "Attack": ["Frostbeam", "Claw"],
+        "Damage type": "Ice"
     }
 ]
