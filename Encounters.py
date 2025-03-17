@@ -1,44 +1,17 @@
-
-# %% [markdown]
-# # second attempt
-
-# %%
+import random
 import time
 import item_initalization
 import stat_generator
 import json
 
-# %%
-import random
-
-# %%
+# Load monsters from a JSON file
 with open('moblist.json', "r") as file:
     mobinfo = json.load(file)
 
-# %%
-print(mobinfo)
-
-# %%
-def get_random_monster ():
+# Function to get a random monster from the list
+def get_random_monster():
     return random.choice(mobinfo)
 
-# %%
-monster = get_random_monster()
-print(f"A wild {monster['Name']} appears!")
-
-# %%
-
-
-# %%
-
-
-# %%
-
-
-# %%
-
-
-# %%
 # Turn-based combat function
 def combat(player):
     monster = get_random_monster()
@@ -90,7 +63,7 @@ def combat(player):
                         # Example: Mana potion gives the player another attack this turn
                         print(f"You used a Mana Potion! You can attack twice this turn!")
                         # Allow the player to attack twice in this turn
-                        damage = random.randint(1, 6) + player.stats["Strength"]
+                        damage = random.randint(1, 6) + player.strength
                         print(f"You attack {monster['Name']} for {damage} damage!")
                         monster_hp -= damage
                         player.inventory.remove(potion)
@@ -134,29 +107,23 @@ def combat(player):
         print(f"\n🏆 You defeated {monster['Name']}!")
 
 
-
-# %%
-combat(player)
-
-# %%
+# Save the player's progress
 def save_game(player):
     with open("save_game.json", "w") as file:
-        # Save the player's stats and inventory
         save_data = {
             "name": player.name,
             "class": player.char_class,
             "stats": player.stats,
-            "inventory": player.inventory.items  # Assuming inventory is a list of items
+            "inventory": player.inventory.items
         }
         json.dump(save_data, file, indent=4)
     print("Game saved successfully.")
 
-# %%
+# Load the saved game data
 def load_game():
     try:
         with open("save_game.json", "r") as file:
             save_data = json.load(file)
-            # You would create the player from the saved data (name, class, stats, inventory)
             player = stat_generator.Player(save_data["name"], save_data["class"])
             player.stats = save_data["stats"]
             player.inventory = save_data["inventory"]
@@ -167,7 +134,7 @@ def load_game():
         return None
 
 
-# %%
+# Adventure function that leads to combat encounters
 def adventure(player):
     locations = ["exploring caves", "exploring plains", "exploring dungeon"]
     for _ in range(random.randint(3, 6)):
@@ -175,9 +142,8 @@ def adventure(player):
         time.sleep(1)
     combat(player)
 
-    
 
-# %%
+# Main encounter loop where the player can choose actions
 def encounter(player):
     while True:
         print("\nWhat would you like to do?")
@@ -188,12 +154,13 @@ def encounter(player):
         elif choice == '2':
             item_initalization.store_interaction()
         elif choice == '3':
-            item_initalization.equip_from_inventory()
+            item_initalization.equip_from_inventory(player)
         elif choice == '4':
             save_game(player)  # Save the game and exit
             break  # Exit the encounter loop, effectively quitting the game
         else:
             print('Invalid choice. Please choose 1, 2, 3, or 4')
+
             
             
 

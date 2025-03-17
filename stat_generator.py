@@ -7,6 +7,30 @@ def statroll():   # Roll 4 d6 and add the highest 3
 def hproll():
     return sum(random.randint(1,10) for _ in range(5))
 
+class Inventory:
+    def __init__(self):
+        self.items = []  # Store inventory items
+
+    def add_item(self, item_name, quantity=1):
+        """Add a single item to the inventory"""
+        for item in self.items:
+            if item["name"] == item_name:
+                item["quantity"] += quantity
+                return
+        self.items.append({"name": item_name, "quantity": quantity})
+
+    def add_items(self, items):
+        """Add multiple items at once"""
+        for item in items:
+            self.add_item(item["name"], item.get("quantity", 1))  # Ensure quantity is handled properly
+
+    def get_inventory(self):
+        """Return a formatted string of inventory contents"""
+        if not self.items:
+            return "Inventory is empty."
+        return "\n".join(f"{item['name']} (x{item['quantity']})" for item in self.items)
+
+
 class Player:
     def __init__(self, name, character_class):
         self.name = name
@@ -93,7 +117,7 @@ class Player:
 
     def remove_item(self, item_name, quantity=1):
         """Remove an item from the inventory"""
-        for item in self.items:
+        for item in self.inventory.items:
             if item["name"] == item_name:
                 item["quantity"] -= quantity
                 if item["quantity"] <= 0:
@@ -112,27 +136,5 @@ class Player:
                 print(f"{item['name']} (x{item['quantity']})")
 
 
-class Inventory:
-    def __init__(self):
-        self.items = []  # Store inventory items
-
-    def add_item(self, item_name, quantity=1):
-        """Add a single item to the inventory"""
-        for item in self.items:
-            if item["name"] == item_name:
-                item["quantity"] += quantity
-                return
-        self.items.append({"name": item_name, "quantity": quantity})
-
-    def add_items(self, items):
-        """Add multiple items at once"""
-        for item in items:
-            self.add_item(item["name"], item.get("quantity", 1))  # Ensure quantity is handled properly
-
-    def get_inventory(self):
-        """Return a formatted string of inventory contents"""
-        if not self.items:
-            return "Inventory is empty."
-        return "\n".join(f"{item['name']} (x{item['quantity']})" for item in self.items)
 
 

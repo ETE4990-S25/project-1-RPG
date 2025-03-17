@@ -154,7 +154,7 @@ def generate_inventory():
 # # Store interaction Version 2
 
 # %%
-def store_interaction():
+def store_interaction(player):
     shop, shop_gold = generate_inventory()  
     
     print('Welcome to my shop, adventurer!')
@@ -278,7 +278,7 @@ def equip_from_inventory(player):
             selected_armor = armor[int(choice) - 1]
             player.equipped_armor = selected_armor  # Equip the armor
             print(f"You have equipped {selected_armor['name']} (AC: {selected_armor['AC']})!")
-            player.ac += selected_armor['AC']  # AC should exist on Player
+            player.base_AC += selected_armor['AC']  # AC should exist on Player
         else:
             print("Invalid selection, no armor equipped.")
     
