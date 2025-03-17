@@ -12,6 +12,12 @@ class Player:
         self.name = name
         self.character_class = character_class
         
+        #Initalize the equipped weapon, armor | AC and base damage
+        self.equipped_weapon = None
+        self.equipped_armor = None
+        self.base_AC = 10  # Default AC without armor
+        self.base_damage = 1  # Default damage if unarmed
+
         # Generate stats
         self.strength = statroll()
         self.dexterity = statroll()
@@ -28,14 +34,12 @@ class Player:
 
         # Initialize inventory and gold
         self.inventory = Inventory()  # To hold loot items
-        self.gold = 50  # Private gold attribute
+        self._gold = 50  # Private gold attribute
     
     @property
-    def gold(self, amount):
-        if amount < 0:
-            print("Gold cannot be negative.")
-            return  # Prevents setting a negative value
-        self._gold = amount
+    def gold(self):
+        return self._gold
+
 
 
     @gold.setter
@@ -46,6 +50,10 @@ class Player:
             self._gold = amount
     
     def display_stats(self):
+        equipped_AC = self.equipped_armor["AC"] if self.equipped_armor else 0
+        equipped_Damage = self.equipped_weapon["Damage"] if self.equipped_weapon else 0
+
+        
         print(f"Name: {self.name}")
         print(f"Class: {self.character_class}")
         print(f"Strength: {self.strength}")
@@ -55,6 +63,15 @@ class Player:
         print(f"Wisdom: {self.wisdom}")
         print(f"Charisma: {self.charisma}")
         print(f"Hitpoints: {self.hitpoints}")
+
+        # Display modified AC and Damage
+        print(f"Armor Class: {self.base_AC + equipped_AC}")
+        print(f"Damage: {self.base_damage + equipped_Damage}")
+        
+        # Show equipped items
+        print(f"Equipped Weapon: {self.equipped_weapon['name'] if self.equipped_weapon else 'None'}")
+        print(f"Equipped Armor: {self.equipped_armor['name'] if self.equipped_armor else 'None'}")
+
 
     def level_up(self):
         self.__level += 1
@@ -74,14 +91,25 @@ class Player:
         else:  # Otherwise, assume it's a single item
             self.inventory.add_item(items)
 
-    def remove_from_inventory(self, item_name, quantity=1):
-        # Delegate removing item from inventory
-        self.inventory.remove_from_inventory(item_name, quantity)
+    def remove_item(self, item_name, quantity=1):
+        """Remove an item from the inventory"""
+        for item in self.items:
+            if item["name"] == item_name:
+                item["quantity"] -= quantity
+                if item["quantity"] <= 0:
+                    self.items.remove(item)
+                return
+
 
 
     def display_inventory(self):
         """Display the player's inventory"""
-        print(self.inventory.get_inventory())
+        if not self.inventory.items:
+            print("Your inventory is empty.")
+        else:
+            print("Inventory:")
+            for item in self.inventory.items:
+                print(f"{item['name']} (x{item['quantity']})")
 
 
 class Inventory:

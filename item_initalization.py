@@ -150,9 +150,8 @@ def generate_inventory():
     return loot, gold
 
 
-
-
-
+# %% [markdown]
+# # Store interaction Version 2
 
 # %%
 def store_interaction():
@@ -163,7 +162,7 @@ def store_interaction():
     print(f'If you wish to sell, I have {shop_gold} gold on hand.\n')
     
     # Display player's gold
-    print(f'You have {player.gold} Gold to spend.\n')
+    print(f'You have {player._gold} Gold to spend.\n')
 
     # Display the shop items with numbers
     for index, item in enumerate(shop, start=1):
@@ -206,7 +205,7 @@ def store_interaction():
         total_cost = item_to_buy['Value'] * quantity
         
         # Check if player has enough gold
-        if player.gold >= total_cost:
+        if player._gold >= total_cost:
             print(f"You bought {quantity} {item_to_buy['name']}(s) for {total_cost} Gold.")
             
             # Add the correct quantity of the item to the player's inventory (gear)
@@ -214,7 +213,7 @@ def store_interaction():
                 player.inventory.add_item(item_to_buy['name'], quantity)
             
             # Deduct gold from the player
-            player.gold -= total_cost
+            player._gold -= total_cost
 
             # Remove the bought item from the shop
             del shop[item_index]
@@ -229,3 +228,59 @@ def store_interaction():
 
 
 
+
+
+# %%
+def equip_from_inventory(player):
+    weapons = []
+    armor = []
+
+    # Find full item data based on stored inventory names
+    for item in player.inventory.items:
+        full_item = next((i for i in itemdata['items'] if i.get("name") == item["name"]), None)
+        if full_item:
+            if "Damage" in full_item:
+                weapons.append(full_item)
+            elif "AC" in full_item:
+                armor.append(full_item)
+
+    # Display available weapons
+    print("Weapons available to equip:")
+    if weapons:
+        for idx, weapon in enumerate(weapons, 1):
+            print(f"{idx}. {weapon['name']} (Damage: {weapon['Damage']})")
+    else:
+        print("No weapons available.")
+
+    # Display available armor
+    print("\nArmor available to equip:")
+    if armor:
+        for idx, arm in enumerate(armor, 1):
+            print(f"{idx}. {arm['name']} (AC: {arm['AC']})")
+    else:
+        print("No armor available.")
+
+    # Ask the player to equip an item
+    item_type = input("\nWhat would you like to equip? (weapon/armor): ").strip().lower()
+    
+    if item_type == "weapon" and weapons:
+        choice = input(f"Enter the number of the weapon you want to equip (1-{len(weapons)}): ").strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(weapons):
+            selected_weapon = weapons[int(choice) - 1]
+            player.equipped_weapon = selected_weapon  # Equip the weapon
+            print(f"You have equipped {selected_weapon['name']} (Damage: {selected_weapon['Damage']})!")
+        else:
+            print("Invalid selection, no weapon equipped.")
+    
+    elif item_type == "armor" and armor:
+        choice = input(f"Enter the number of the armor you want to equip (1-{len(armor)}): ").strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(armor):
+            selected_armor = armor[int(choice) - 1]
+            player.equipped_armor = selected_armor  # Equip the armor
+            print(f"You have equipped {selected_armor['name']} (AC: {selected_armor['AC']})!")
+            player.ac += selected_armor['AC']  # AC should exist on Player
+        else:
+            print("Invalid selection, no armor equipped.")
+    
+    else:
+        print("Invalid item type or no items available.")
