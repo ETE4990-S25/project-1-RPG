@@ -105,6 +105,12 @@ def combat(player):
         print("\n💀 You have been defeated!")
     elif monster_hp <= 0:
         print(f"\n🏆 You defeated {monster['Name']}!")
+    
+        # Increment combat count after each encounter
+    player.combat_count += 1
+
+    # Check if the player should level up
+    level_up(player)
 
 
 # Save the player's progress

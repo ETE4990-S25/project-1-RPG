@@ -134,6 +134,45 @@ class Player:
             print("Inventory:")
             for item in self.inventory.items:
                 print(f"{item['name']} (x{item['quantity']})")
+    
+    def level_up(player):
+        # Define the number of encounters required for each level-up
+        encounters_per_level = 3  # This can be adjusted or scaled based on player level
+
+        # Check if player has reached the required encounters for a level up
+        if player.combat_count >= encounters_per_level:
+            player.level += 1
+            player.combat_count = 0  # Reset combat count after leveling up
+            print(f"\n🎉 {player.name} has leveled up to Level {player.level}!")
+
+            # Allow player to allocate stat points on level up
+            allocate_stat_points(player)
+
+def allocate_stat_points(player):
+    # This function can be customized to allow the player to choose how to allocate their points
+    points_to_allocate = 5  # You can increase this number per level or based on player needs
+    print(f"You have {points_to_allocate} stat points to allocate!")
+
+    while points_to_allocate > 0:
+        print(f"Current Stats: Strength: {player.strength}, Dexterity: {player.dexterity}, Intelligence: {player.intelligence}")
+        print("Choose a stat to increase (1 for Strength, 2 for Dexterity, 3 for Intelligence):")
+        choice = input("> ")
+
+        if choice == "1":
+            player.strength += 1
+        elif choice == "2":
+            player.dexterity += 1
+        elif choice == "3":
+            player.intelligence += 1
+        else:
+            print("Invalid choice. Try again.")
+            continue
+
+        points_to_allocate -= 1
+        print(f"You have {points_to_allocate} stat points left.")
+
+    print(f"New Stats: Strength: {player.strength}, Dexterity: {player.dexterity}, Intelligence: {player.intelligence}")
+
 
 
 
