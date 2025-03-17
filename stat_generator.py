@@ -41,7 +41,7 @@ class Player:
         self.equipped_armor = None
         self.base_AC = 10  # Default AC without armor
         self.base_damage = 1  # Default damage if unarmed
-
+        self.combat_count = 0  # Track combat encounter
         # Generate stats
         self.strength = statroll()
         self.dexterity = statroll()

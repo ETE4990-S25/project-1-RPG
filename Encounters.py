@@ -52,7 +52,7 @@ def combat(player):
                             print(f"{i+1}. Power Potion (+{item['Power']} Damage)")
 
                     potion_choice = int(input("> ")) - 1
-                    potion = player.inventory[potion_choice]
+                    potion = player.inventory.items2[potion_choice]
 
                     if 'Health' in potion:
                         player.hitpoints += potion['Health']
@@ -110,7 +110,7 @@ def combat(player):
     player.combat_count += 1
 
     # Check if the player should level up
-    level_up(player)
+    player.level_up(player)
 
 
 # Save the player's progress
@@ -158,7 +158,7 @@ def encounter(player):
         if choice == '1':
             adventure(player)
         elif choice == '2':
-            item_initalization.store_interaction()
+            item_initalization.store_interaction(player)
         elif choice == '3':
             item_initalization.equip_from_inventory(player)
         elif choice == '4':
