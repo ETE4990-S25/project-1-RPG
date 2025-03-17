@@ -135,11 +135,19 @@ def save_game(player):
         save_data = {
             "name": player.name,
             "class": player.character_class,
-            "stats": player.stats,
+            "stats": {
+                "strength": player.strength,
+                "dexterity": player.dexterity,
+                "constitution": player.constitution,
+                "intelligence": player.intelligence,
+                "wisdom": player.wisdom,
+                "charisma": player.charisma
+            },
             "inventory": player.inventory.items
         }
         json.dump(save_data, file, indent=4)
     print("Game saved successfully.")
+
 
 # Load the saved game data
 def load_game():
