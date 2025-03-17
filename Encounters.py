@@ -118,7 +118,7 @@ def save_game(player):
     with open("save_game.json", "w") as file:
         save_data = {
             "name": player.name,
-            "class": player.char_class,
+            "class": player.character_class,
             "stats": player.stats,
             "inventory": player.inventory.items
         }
