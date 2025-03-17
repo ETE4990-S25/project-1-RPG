@@ -27,17 +27,16 @@ monster = get_random_monster()
 print(f"A wild {monster['Name']} appears!")
 
 # %%
-player = stat_generator.Player('Boblin', 'Adventurer')
-print(player.display_stats())
+
 
 # %%
-gear,gold = item_initalization.generate_inventory()
+
 
 # %%
-player.add_to_inventory(gear)
+
 
 # %%
-player.display_inventory()
+
 
 # %%
 # Turn-based combat function
