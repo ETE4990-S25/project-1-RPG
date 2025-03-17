@@ -36,12 +36,6 @@ class Player:
         self.name = name
         self.character_class = character_class
         
-        #Initalize the equipped weapon, armor | AC and base damage
-        self.equipped_weapon = None
-        self.equipped_armor = None
-        self.base_AC = 10  # Default AC without armor
-        self.base_damage = 1  # Default damage if unarmed
-        self.combat_count = 0  # Track combat encounter
         # Generate stats
         self.strength = statroll()
         self.dexterity = statroll()
@@ -49,9 +43,21 @@ class Player:
         self.intelligence = statroll()
         self.wisdom = statroll()
         self.charisma = statroll()
-        
+        #generte stat mods
+        self.strmod = math.floor((self.strength-10)/2)
+        self.dexmod = math.floor((self.dexterity-10)/2)
+        self.conmod = math.floor((self.constitution-10)/2)
+        self.intmod = math.floor((self.intelligence-10/2))
+        self.wismod = math.floor((self.wisdom-10)/2)
+        self.chamod = math.floor((self.charisma-10)/2)
         # Calculate HP
         self.hitpoints = hproll() + 5 * (math.floor((self.constitution-10)/2))
+        #Initalize the equipped weapon, armor | AC and base damage
+        self.equipped_weapon = None
+        self.equipped_armor = None
+        self.base_AC = 10 + self.dexmod # Default AC without armor
+        self.base_damage = 1  # Default damage if unarmed
+        self.combat_count = 0  # Track combat encounter
 
         # Hidden level (using name mangling)
         self.__level = 1
@@ -59,6 +65,7 @@ class Player:
         # Initialize inventory and gold
         self.inventory = Inventory()  # To hold loot items
         self._gold = 50  # Private gold attribute
+
     
     @property
     def gold(self):
@@ -81,11 +88,17 @@ class Player:
         print(f"Name: {self.name}")
         print(f"Class: {self.character_class}")
         print(f"Strength: {self.strength}")
+        print(f"Modifier: {self.strmod}")
         print(f"Dexterity: {self.dexterity}")
+        print(f"Modifier: {self.dexmod}")
         print(f"Constitution: {self.constitution}")
+        print(f"Modifier: {self.conmod}")
         print(f"Intelligence: {self.intelligence}")
+        print(f"Modifier: {self.intmod}")
         print(f"Wisdom: {self.wisdom}")
+        print(f"Modifier: {self.wismod}")
         print(f"Charisma: {self.charisma}")
+        print(f"Modifier: {self.chamod}")
         print(f"Hitpoints: {self.hitpoints}")
 
         # Display modified AC and Damage

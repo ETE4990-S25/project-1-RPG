@@ -3,6 +3,7 @@ import time
 import item_initalization
 import stat_generator
 import json
+import math
 
 # Load monsters from a JSON file
 with open('moblist.json', "r") as file:
@@ -21,6 +22,9 @@ def combat(player):
     print(f"Attacks: {', '.join(monster['Attack'])}\n")
     
     monster_hp = monster['HP']
+    monster_ac = monster['AC']
+    monster_strmod = math.floor((monster['Str']-10)/2)
+    monster_strmod = math.floor((monster['Str']-10)/2)
     
     # Determine turn order based on Dexterity
     player_turn = player.dexterity >= 10  # Adjust threshold as needed
@@ -35,10 +39,16 @@ def combat(player):
             choice = input("> ")
 
             if choice == "1":
-                # Apply power buff to damage if it's active
-                damage = random.randint(1, 6) + player.strength + power_buff
-                print(f"You attack {monster['Name']} for {damage} damage!")
-                monster_hp -= damage
+                attack_roll = random.randint(1, 20) + player.strmod
+                print(f"{player.name} makes a weapon attack!")
+                print(f"{player.name} rolled a {attack_roll} to hit!")
+                if attack_roll > monster_ac:
+                    # Apply power buff to damage if it's active
+                    damage = random.randint(1, 6) + player.strmod + power_buff
+                    print(f"You hit {monster['Name']} for {damage} damage!")
+                    monster_hp -= damage
+                else:
+                    print(f"You missed!")
 
             elif choice == "2":
                 if player.inventory:  # Ensure there's something to use
@@ -88,9 +98,15 @@ def combat(player):
 
         else:
             attack = random.choice(monster["Attack"])
-            damage = random.randint(1, 6)  # Monster attack example
-            print(f"{monster['Name']} uses {attack} for {damage} damage!")
-            player.hitpoints -= damage
+            print(f"{monster['Name']} uses {attack}!")
+            mobattack_roll = random.randint(1, 20) + monster_strmod
+            print(f"{monster['Name']} rolled a {mobattack_roll} to hit!")
+            if mobattack_roll > player.base_AC:
+                damage = random.randint(1, 6)  # Monster attack example
+                print(f"{monster['Name']} deals {damage} damage!")
+                player.hitpoints -= damage
+            else:
+                print(f"The monster missed!")
 
         print(f"📊 Player HP: {player.hitpoints} | {monster['Name']} HP: {monster_hp}")
 
