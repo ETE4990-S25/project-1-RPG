@@ -1,6 +1,6 @@
 import item_initalization
 import stat_generator
-import encounters
+import Encounters
 
 def main():
     # Prompt player for name and class
@@ -20,7 +20,7 @@ def main():
     player.display_inventory()
 
     # Start the encounter loop (this is where the player can start the game)
-    encounters.encounter(player)  # Pass player to the encounter
+    Encounters.encounter(player)  # Pass player to the encounter
 
 if __name__ == "__main__":
     main()
