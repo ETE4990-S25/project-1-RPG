@@ -64,7 +64,7 @@ for item in itemdata['items']:
         continue 
     
     if item.get('category') in valid_armor:
-        item['AC'] = random.randint(10,16)
+        item['AC'] = random.randint(1,6)
 
 
 # %% [markdown]
