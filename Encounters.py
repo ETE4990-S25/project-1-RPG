@@ -21,14 +21,14 @@ def combat(player):
     print(f"AC: {monster['AC']}, HP: {monster['HP']}")
     print(f"Attacks: {', '.join(monster['Attack'])}\n")
     
-    monster_hp = monster['HP']
-    monster_ac = monster['AC']
-    monster_strmod = math.floor((monster['Str']-10)/2)
-    monster_dexmod = math.floor((monster['Dex']-10)/2)
-    monster_conmod = math.floor((monster['Con']-10)/2)
-    monster_intmod = math.floor((monster['Int']-10)/2)
-    monster_wismod = math.floor((monster['Wis']-10)/2)
-    monster_chamod = math.floor((monster['Cha']-10)/2)
+    monster_hp = monster['Health Points']
+    monster_ac = monster['Armor Class']
+    monster_strmod = math.floor((monster['Strength']-10)/2)
+    monster_dexmod = math.floor((monster['Dexterity']-10)/2)
+    monster_conmod = math.floor((monster['Constitution']-10)/2)
+    monster_intmod = math.floor((monster['Intelligence']-10)/2)
+    monster_wismod = math.floor((monster['Wisdom']-10)/2)
+    monster_chamod = math.floor((monster['Charisma']-10)/2)
     monster_dmgtype = monster['Damage type']
 
     moveslist = [Fireball, Firedash, Watergun, Aquajet, Earthtremor, 
