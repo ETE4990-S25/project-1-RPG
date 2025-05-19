@@ -8,7 +8,7 @@ import random
 import stat_generator
 
 # %%
-with open('ItemData.json', "r") as file:
+with open('project-1-RPG-main/ItemData.json', "r") as file:
     itemdata = json.load(file)
 
 
@@ -169,6 +169,10 @@ def store_interaction(player):
         print(f"{index}. {item['name']}")
         print(item['description'])
         print(f"{item['Value']} Gold")
+        if 'Damage' in item:
+            print(f'Damage: {item['Damage']}')
+        if 'AC' in item:
+            print(f'AC: {item['AC']}')
         print('-----------------------------------')
     
     # Display player inventory

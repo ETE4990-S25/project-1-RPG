@@ -5,7 +5,6 @@ import Encounters
 def main():
     # Prompt player for name and class
     player_name = input('Enter your name: ')
-    player_class = input('Enter your Class: ')
 
     # Create player with name and class
     player = stat_generator.Player(player_name, player_class)

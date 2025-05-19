@@ -4,9 +4,13 @@ import item_initalization
 import stat_generator
 import json
 import math
+import os
 
 # Load monsters from a JSON file
-with open('moblist.json', "r") as file:
+base_path = os.path.dirname(__file__)
+file_path = os.path.join(base_path, 'project-1-RPG-main', 'moblist.json')
+
+with open(file_path, "r") as file:
     mobinfo = json.load(file)
 
 # Function to get a random monster from the list
@@ -16,7 +20,7 @@ def get_random_monster():
 # Turn-based combat function
 def combat(player):
     monster = get_random_monster()
-    
+
     print(f"\n⚔ A wild {monster['Name']} appears! ⚔")
     print(f"AC: {monster['AC']}, HP: {monster['HP']}")
     print(f"Attacks: {', '.join(monster['Attack'])}\n")
@@ -31,25 +35,25 @@ def combat(player):
     monster_chamod = math.floor((monster['Cha']-10)/2)
     monster_dmgtype = monster['Damage type']
 
-    moveslist = [Fireball, Firedash, Watergun, Aquajet, Earthtremor, 
-                 Rockslide, Gust, Windblade, Tentacle, Bite, Slam, Grab,
-                 Venom, Web, Frostbeam, Claw]
-    Fireball = random.randint(1, 12) + monster_intmod
-    Firedash = random.randint(1, 10) + monster_dexmod
-    Watergun = random.randint(1, 12) + monster_wismod
-    Aquajet = random.randint(1, 10) + monster_dexmod
-    Earthtremor = random.randint(1, 12) + monster_conmod
-    Rockslide = random.randint(1, 10) + monster_dexmod
-    Gust = random.randint(1, 12) + monster_chamod
-    Windblade = random.randint(1, 10) + monster_dexmod
-    Tentacle = random.randint(1, 12) + monster_dexmod
-    Bite = random.randint(1, 8) + monster_strmod
-    Slam = random.randint(1, 12) + monster_conmod
-    Grab = random.randint(1, 10) + monster_strmod
-    Venom = random.randint(1, 12) + monster_intmod
-    Web = random.randint(1, 10) + monster_dexmod
-    Frostbeam = random.randint(1, 12) + monster_chamod
-    Claw = random.randint(1, 10) + monster_strmod
+    # Declare ba moves first
+    moves = {
+        "Fireball": random.randint(1, 12) + monster_intmod,
+        "Firedash": random.randint(1, 10) + monster_dexmod,
+        "Watergun": random.randint(1, 12) + monster_wismod,
+        "Aquajet": random.randint(1, 10) + monster_dexmod,
+        "Earthtremor": random.randint(1, 12) + monster_conmod,
+        "Rockslide": random.randint(1, 10) + monster_dexmod,
+        "Gust": random.randint(1, 12) + monster_chamod,
+        "Windblade": random.randint(1, 10) + monster_dexmod,
+        "Tentacle": random.randint(1, 12) + monster_dexmod,
+        "Bite": random.randint(1, 8) + monster_strmod,
+        "Slam": random.randint(1, 12) + monster_conmod,
+        "Grab": random.randint(1, 10) + monster_strmod,
+        "Venom": random.randint(1, 12) + monster_intmod,
+        "Web": random.randint(1, 10) + monster_dexmod,
+        "Frostbeam": random.randint(1, 12) + monster_chamod,
+        "Claw": random.randint(1, 10) + monster_strmod,
+    }
     
     # Determine turn order based on Dexterity
     player_turn = player.dexterity >= 10  # Adjust threshold as needed
@@ -78,6 +82,19 @@ def combat(player):
                     print(f"You missed!")
 
             elif choice == "2":
+                print("\nPotion Inventory:")
+                has_potions = False
+                for i, item in enumerate(player.inventory, 1):
+                    if 'Health' in item:
+                        print(f"{i}. Health Potion (+{item['Health']} HP)")
+                        has_potions = True
+                    elif 'Mana' in item:
+                        print(f"{i}. Mana Potion (+{item['Mana']} Mana)")
+                        has_potions = True
+                    elif 'Power' in item:
+                        print(f"{i}. Power Potion (+{item['Power']} Damage)")
+                        has_potions = True
+
                 if player.inventory:  # Ensure there's something to use
                     print("Select potion to use:")
                     for i, item in enumerate(player.inventory.items):
@@ -87,9 +104,11 @@ def combat(player):
                             print(f"{i+1}. Mana Potion ({item['Mana']} Mana)")
                         elif 'Power' in item:
                             print(f"{i+1}. Power Potion (+{item['Power']} Damage)")
-
-                    potion_choice = int(input("> ")) - 1
-                    potion = player.inventory.items2[potion_choice]
+                    try:
+                        potion_choice = int(input("> ")) - 1
+                        potion = player.inventory.items[potion_choice]
+                    except (ValueError, IndexError):
+                        print("Invalid choice! You wasted your turn.")
 
                     if 'Health' in potion:
                         player.hitpoints += potion['Health']
