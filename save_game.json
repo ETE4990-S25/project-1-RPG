@@ -1,0 +1,70 @@
+{
+    "name": "kallos",
+    "class": "adventurer",
+    "stats": {
+        "strength": 13,
+        "dexterity": 11,
+        "constitution": 13,
+        "intelligence": 14,
+        "wisdom": 16,
+        "charisma": 15
+    },
+    "inventory": [
+        {
+            "name": "Aqua Rod",
+            "quantity": 1
+        },
+        {
+            "name": "Raspberry Bonbon",
+            "quantity": 1
+        },
+        {
+            "name": "Hero's Sword",
+            "quantity": 1
+        },
+        {
+            "name": "Wizard's Scroll",
+            "quantity": 2
+        },
+        {
+            "name": "Training Sword",
+            "quantity": 1
+        },
+        {
+            "name": "Silver Ingot",
+            "quantity": 1
+        },
+        {
+            "name": "Small Black Potion",
+            "quantity": 1
+        },
+        {
+            "name": "Golden Bow",
+            "quantity": 1
+        },
+        {
+            "name": "Fire Ring",
+            "quantity": 1
+        },
+        {
+            "name": "Holy Shield",
+            "quantity": 1
+        },
+        {
+            "name": "Golden Key",
+            "quantity": 1
+        },
+        {
+            "name": "Silver Coin",
+            "quantity": 1
+        },
+        {
+            "name": "Large Green Potion",
+            "quantity": 1
+        },
+        {
+            "name": "Pink Candycane",
+            "quantity": 1
+        }
+    ]
+}
